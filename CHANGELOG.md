@@ -147,3 +147,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Initial release: hardware bridge package with `RawJsonDriver`, `EscPosDriver`, `Rs232Driver`
 * Web Serial JS bridge (`PortFlowBridge`), Livewire components, ESC/POS printing engine
 * Clean Architecture (Domain / Application / Infrastructure), CI/CD, release-please automation
+- [2018-01-18]: docs: document public API with example usage
