@@ -148,3 +148,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Web Serial JS bridge (`PortFlowBridge`), Livewire components, ESC/POS printing engine
 * Clean Architecture (Domain / Application / Infrastructure), CI/CD, release-please automation
 - [2018-01-18]: docs: document public API with example usage
+- [2018-02-04]: fix: handle context cancellation in long-running tasks
