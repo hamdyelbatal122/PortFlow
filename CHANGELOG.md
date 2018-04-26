@@ -157,3 +157,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [2018-04-17]: refactor: separate transport layer from business logic
 - [2018-04-17]: feat: add Prometheus metrics instrumentation
 - [2018-04-26]: fix: correct integer overflow in metric accumulator
+- [2018-04-26]: chore: add integration tests for database layer
