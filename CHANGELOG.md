@@ -163,3 +163,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [2018-05-21]: feat: add structured logging with zerolog
 - [2018-05-25]: fix: correct JSON unmarshaling for optional fields
 - [2018-05-27]: chore: update go.mod to Go 1.21 and tidy dependencies
+- [2018-06-06]: fix: resolve data race detected by race detector
