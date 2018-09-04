@@ -169,3 +169,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [2018-08-09]: fix: sanitize user input before shell execution
 - [2018-08-13]: feat: add gRPC health check protocol support
 - [2018-08-27]: perf: use buffered channels to reduce blocking
+- [2018-09-04]: feat: implement graceful shutdown with signal handling
