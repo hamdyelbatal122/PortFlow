@@ -174,3 +174,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [2018-09-16]: docs: add GoDoc comments to exported functions
 - [2018-09-17]: docs: document public API with example usage in core module
 - [2018-09-18]: fix: handle context cancellation in long-running tasks for performance
+- [2018-09-20]: refactor: replace global state with dependency injection in core module
