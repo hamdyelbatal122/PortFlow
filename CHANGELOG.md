@@ -177,3 +177,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [2018-09-20]: refactor: replace global state with dependency injection in core module
 - [2018-09-22]: refactor: extract middleware into separate package
 - [2018-09-26]: feat: add distributed tracing with OpenTelemetry across codebase
+- [2018-10-06]: refactor: replace error strings with typed sentinel errors
