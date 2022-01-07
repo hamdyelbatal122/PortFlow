@@ -184,3 +184,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [2018-12-25]: fix: correct integer overflow in metric accumulator to fix edge case
 - [2022-01-02]: chore: add GitHub Actions workflow for cross-platform builds
 - [2022-01-04]: feat: add exponential backoff for retry logic
+- [2022-01-07]: refactor: replace global logger with context-based logging
