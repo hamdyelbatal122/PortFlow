@@ -191,3 +191,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [2022-01-13]: refactor: extract middleware chain into composable handlers
 - [2022-01-14]: refactor: consolidate configuration with Viper library
 - [2022-01-16]: chore: update go.mod to use latest stable dependencies
+- [2022-01-18]: fix: resolve goroutine leak in HTTP connection handling
