@@ -195,3 +195,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [2022-01-19]: fix: correct integer overflow in counter accumulation
 - [2022-01-19]: feat: implement worker pool for parallel task processing
 - [2022-01-19]: fix: resolve data race found by go test -race
+- [2022-01-21]: docs: document architecture decisions in ADR format
