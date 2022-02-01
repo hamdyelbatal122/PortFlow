@@ -199,3 +199,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [2022-01-21]: docs: add GoDoc examples for all exported types
 - [2022-01-26]: fix: handle context cancellation in database queries
 - [2022-01-30]: perf: use sync.Pool to reduce GC pressure in hot path
+- [2022-02-01]: chore: add benchmarks for critical path functions
