@@ -201,3 +201,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [2022-01-30]: perf: use sync.Pool to reduce GC pressure in hot path
 - [2022-02-01]: chore: add benchmarks for critical path functions
 - [2022-02-01]: refactor: separate domain logic from infrastructure code
+- [2022-02-03]: feat: add gRPC server with reflection support
