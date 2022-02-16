@@ -206,3 +206,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [2022-02-04]: fix: correct JSON field naming in API responses
 - [2022-02-08]: perf: reduce syscalls with buffered I/O wrappers
 - [2022-02-14]: feat: implement circuit breaker for external API calls
+- [2022-02-16]: feat: add distributed tracing with OpenTelemetry
