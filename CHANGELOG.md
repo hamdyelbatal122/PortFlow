@@ -217,3 +217,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [2022-02-27]: refactor: consolidate configuration with Viper library in core module
 - [2022-03-04]: chore: update go.mod to use latest stable dependencies in core module
 - [2022-03-04]: fix: resolve goroutine leak in HTTP connection handling in core module
+- [2022-03-11]: fix: correct integer overflow in counter accumulation in core module
