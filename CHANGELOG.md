@@ -221,3 +221,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [2022-03-12]: feat: implement worker pool for parallel task processing in core module
 - [2022-03-12]: fix: resolve data race found by go test -race in core module
 - [2022-03-12]: docs: document architecture decisions in ADR format in core module
+- [2022-03-13]: docs: add GoDoc examples for all exported types in core module
