@@ -250,3 +250,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [2022-04-17]: fix: handle context cancellation in database queries in core module
 - [2022-04-18]: perf: use sync.Pool to reduce GC pressure in hot path in core module
 - [2022-04-19]: chore: add benchmarks for critical path functions in core module
+- [2022-04-19]: refactor: separate domain logic from infrastructure code in core module
