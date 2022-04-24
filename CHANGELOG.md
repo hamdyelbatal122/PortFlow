@@ -253,3 +253,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [2022-04-19]: refactor: separate domain logic from infrastructure code in core module
 - [2022-04-20]: feat: add gRPC server with reflection support in core module
 - [2022-04-22]: chore: configure golangci-lint with project rules in core module
+- [2022-04-24]: fix: correct JSON field naming in API responses in core module
