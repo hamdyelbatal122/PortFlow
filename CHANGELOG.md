@@ -274,3 +274,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [2022-05-22]: docs: add GoDoc examples for all exported types in core module
 - [2022-05-25]: fix: handle context cancellation in database queries in core module
 - [2022-05-25]: perf: use sync.Pool to reduce GC pressure in hot path in core module
+- [2022-05-30]: chore: add benchmarks for critical path functions in core module
