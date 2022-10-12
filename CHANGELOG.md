@@ -377,3 +377,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [2022-10-10]: chore: add benchmarks for critical path functions in core module
 - [2022-10-10]: refactor: separate domain logic from infrastructure code in core module
 - [2022-10-10]: feat: add gRPC server with reflection support in core module
+- [2022-10-12]: chore: configure golangci-lint with project rules in core module
