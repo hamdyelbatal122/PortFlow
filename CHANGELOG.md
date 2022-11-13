@@ -398,3 +398,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [2022-11-12]: docs: document architecture decisions in ADR format in core module
 - [2022-11-13]: docs: add GoDoc examples for all exported types in core module
 - [2022-11-13]: fix: handle context cancellation in database queries in core module
+- [2022-11-13]: perf: use sync.Pool to reduce GC pressure in hot path in core module
