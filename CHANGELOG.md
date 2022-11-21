@@ -408,3 +408,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [2022-11-18]: feat: implement circuit breaker for external API calls in core module
 - [2022-11-18]: feat: add distributed tracing with OpenTelemetry in core module
 - [2022-11-20]: chore: add GitHub Actions workflow for cross-platform builds in core module
+- [2022-11-21]: feat: add exponential backoff for retry logic in core module
