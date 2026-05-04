@@ -18,7 +18,7 @@ final class MakeDriverCommand extends Command
     public function handle(): int
     {
         $nameArg = $this->argument('name');
-        $raw     = is_string($nameArg) ? $nameArg : '';
+        $raw = is_string($nameArg) ? $nameArg : '';
 
         $className = Str::studly($raw);
 
@@ -30,13 +30,13 @@ final class MakeDriverCommand extends Command
         // Derive a kebab-case driver name from the class name (sans "Driver").
         $driverName = Str::kebab(Str::beforeLast($className, 'Driver'));
 
-        $nsOption  = $this->option('namespace');
+        $nsOption = $this->option('namespace');
         $namespace = is_string($nsOption) && $nsOption !== ''
             ? $nsOption
             : 'App\\SerialDrivers';
 
-        $relPath   = (string) str_replace('App\\', '', str_replace('\\', '/', $namespace));
-        $targetDir  = app_path($relPath);
+        $relPath = (string) str_replace('App\\', '', str_replace('\\', '/', $namespace));
+        $targetDir = app_path($relPath);
         $targetFile = $targetDir.'/'.$className.'.php';
 
         if (file_exists($targetFile)) {
@@ -73,10 +73,10 @@ final class MakeDriverCommand extends Command
 
         $this->line('  <options=bold>Next steps:</>');
         $this->line('');
-        $this->line("  1. Register the driver in <comment>config/portflow.php</comment>:");
+        $this->line('  1. Register the driver in <comment>config/portflow.php</comment>:');
         $this->line("     <comment>'drivers' => ['{$driverName}' => \\{$namespace}\\{$className}::class]</comment>");
         $this->newLine();
-        $this->line("  2. Use it in your application:");
+        $this->line('  2. Use it in your application:');
         $this->line("     <comment>PortFlow::ingest('{$driverName}', \$rawChunk);</comment>");
         $this->newLine();
 
