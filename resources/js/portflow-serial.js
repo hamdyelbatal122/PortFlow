@@ -1,9 +1,9 @@
-class SynapseBridge {
+class PortFlowBridge {
     constructor(options = {}) {
         this.options = {
             baudRate: options.baudRate ?? 9600,
             driver: options.driver ?? 'raw-json',
-            ingestUrl: options.ingestUrl ?? '/synapse/ingest',
+            ingestUrl: options.ingestUrl ?? '/portflow/ingest',
             csrfToken: options.csrfToken ?? document.querySelector('meta[name="csrf-token"]')?.content,
         };
 
@@ -59,7 +59,7 @@ class SynapseBridge {
                 this.emitStatus();
             }
         } catch (error) {
-            console.error('[Synapse] read loop error', error);
+            console.error('[PortFlow] read loop error', error);
         }
     }
 
@@ -91,10 +91,10 @@ class SynapseBridge {
         });
 
         if (!response.ok) {
-            throw new Error(`Synapse ingest failed with status ${response.status}`);
+            throw new Error(`PortFlow ingest failed with status ${response.status}`);
         }
 
-        window.dispatchEvent(new CustomEvent('synapse-frame-received', { detail: { chunk } }));
+        window.dispatchEvent(new CustomEvent('portflow-frame-received', { detail: { chunk } }));
     }
 
     async close() {
@@ -119,7 +119,7 @@ class SynapseBridge {
     }
 
     emitStatus() {
-        window.dispatchEvent(new CustomEvent('synapse-status', {
+        window.dispatchEvent(new CustomEvent('portflow-status', {
             detail: {
                 connected: this.connected,
                 driver: this.options.driver,
@@ -128,7 +128,7 @@ class SynapseBridge {
         }));
 
         if (window.Livewire) {
-            window.Livewire.dispatch('synapse-status-updated', {
+            window.Livewire.dispatch('portflow-status-updated', {
                 connected: this.connected,
                 driver: this.options.driver,
                 frames: this.frames,
@@ -137,10 +137,10 @@ class SynapseBridge {
     }
 }
 
-window.SynapseBridge = SynapseBridge;
+window.PortFlowBridge = PortFlowBridge;
 
-window.synapseConnector = function synapseConnector() {
-    const bridge = new SynapseBridge(window.synapseConfig ?? {});
+window.portflowConnector = function portflowConnector() {
+    const bridge = new PortFlowBridge(window.portflowConfig ?? {});
 
     return {
         connected: false,

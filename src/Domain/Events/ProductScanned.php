@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Hamzi\Synapse\Domain\Events;
+namespace Hamzi\PortFlow\Domain\Events;
 
 final class ProductScanned
 {

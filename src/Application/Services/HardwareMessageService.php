@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Hamzi\Synapse\Application\Services;
+namespace Hamzi\PortFlow\Application\Services;
 
-use Hamzi\Synapse\Domain\DTO\SerialFrame;
+use Hamzi\PortFlow\Domain\DTO\SerialFrame;
 
 final class HardwareMessageService
 {

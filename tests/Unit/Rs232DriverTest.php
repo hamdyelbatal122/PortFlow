@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Hamzi\Synapse\Tests\Unit;
+namespace Hamzi\PortFlow\Tests\Unit;
 
-use Hamzi\Synapse\Infrastructure\Drivers\Rs232Driver;
+use Hamzi\PortFlow\Infrastructure\Drivers\Rs232Driver;
 use PHPUnit\Framework\TestCase;
 
 final class Rs232DriverTest extends TestCase

@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Hamzi\Synapse\Tests;
+namespace Hamzi\PortFlow\Tests;
 
-use Hamzi\Synapse\SynapseServiceProvider;
+use Hamzi\PortFlow\PortFlowServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 abstract class TestCase extends Orchestra
 {
     protected function getPackageProviders($app): array
     {
-        return [SynapseServiceProvider::class];
+        return [PortFlowServiceProvider::class];
     }
 }

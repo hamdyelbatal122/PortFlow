@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Hamzi\Synapse\Domain\DTO;
+namespace Hamzi\PortFlow\Domain\DTO;
 
 use DateTimeImmutable;
 

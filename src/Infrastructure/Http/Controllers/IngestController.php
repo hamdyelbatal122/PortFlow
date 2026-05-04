@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Hamzi\Synapse\Infrastructure\Http\Controllers;
+namespace Hamzi\PortFlow\Infrastructure\Http\Controllers;
 
-use Hamzi\Synapse\SynapseManager;
+use Hamzi\PortFlow\PortFlowManager;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 final class IngestController
 {
-    public function __invoke(Request $request, SynapseManager $synapse): JsonResponse
+    public function __invoke(Request $request, PortFlowManager $portflow): JsonResponse
     {
         $validated = $request->validate([
             'driver' => ['nullable', 'string'],
@@ -18,9 +18,9 @@ final class IngestController
             'context' => ['nullable', 'array'],
         ]);
 
-        $driver = (string) ($validated['driver'] ?? config('synapse.default_driver'));
+        $driver = (string) ($validated['driver'] ?? config('portflow.default_driver'));
 
-        $frames = $synapse->ingest(
+        $frames = $portflow->ingest(
             driver: $driver,
             chunk: $validated['chunk'],
             context: (array) ($validated['context'] ?? []),

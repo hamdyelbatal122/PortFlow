@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Hamzi\Synapse\Infrastructure\Printing;
+namespace Hamzi\PortFlow\Infrastructure\Printing;
 
 /**
  * Fluent builder for ESC/POS byte sequences (thermal printers).

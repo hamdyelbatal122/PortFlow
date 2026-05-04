@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Hamzi\Synapse\Infrastructure\Livewire;
+namespace Hamzi\PortFlow\Infrastructure\Livewire;
 
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
-final class SynapseConnector extends Component
+final class PortFlowConnector extends Component
 {
     public bool $connected = false;
 
@@ -21,6 +21,6 @@ final class SynapseConnector extends Component
 
     public function render(): View
     {
-        return view('synapse::livewire.connector');
+        return view('portflow::livewire.connector');
     }
 }

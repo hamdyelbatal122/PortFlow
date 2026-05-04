@@ -1,5 +1,5 @@
 {
-    "name": "hamzi/synapse",
+    "name": "hamzi/portflow",
     "description": "Neural bridge package connecting Laravel applications with local and IoT hardware using Web Serial and clean driver abstractions.",
     "type": "library",
     "keywords": [
@@ -23,8 +23,8 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/hamdyelbatal122/Synapse/issues",
-        "source": "https://github.com/hamdyelbatal122/Synapse"
+        "issues": "https://github.com/hamdyelbatal122/PortFlow/issues",
+        "source": "https://github.com/hamdyelbatal122/PortFlow"
     },
     "require": {
         "php": "^8.2",
@@ -44,12 +44,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Hamzi\\Synapse\\": "src/"
+            "Hamzi\\PortFlow\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Hamzi\\Synapse\\Tests\\": "tests/"
+            "Hamzi\\PortFlow\\Tests\\": "tests/"
         }
     },
     "scripts": {
@@ -60,10 +60,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Hamzi\\Synapse\\SynapseServiceProvider"
+                "Hamzi\\PortFlow\\PortFlowServiceProvider"
             ],
             "aliases": {
-                "Synapse": "Hamzi\\Synapse\\Facades\\Synapse"
+                "PortFlow": "Hamzi\\PortFlow\\Facades\\PortFlow"
             }
         }
     },

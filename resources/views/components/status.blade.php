@@ -1,5 +1,5 @@
 <div
-    x-data="synapseConnector()"
+    x-data="portflowConnector()"
     class="inline-flex items-center gap-2 rounded-md border px-3 py-1 text-xs"
     x-bind:class="connected ? 'border-emerald-500 text-emerald-600' : 'border-amber-500 text-amber-600'"
 >

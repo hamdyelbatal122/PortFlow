@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Hamzi\Synapse\Infrastructure\Printing;
+namespace Hamzi\PortFlow\Infrastructure\Printing;
 
 use Illuminate\Contracts\View\Factory;
 
