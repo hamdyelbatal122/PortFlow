@@ -17,7 +17,9 @@ final class MakeDriverCommand extends Command
 
     public function handle(): int
     {
-        $raw       = (string) $this->argument('name');
+        $nameArg = $this->argument('name');
+        $raw     = is_string($nameArg) ? $nameArg : '';
+
         $className = Str::studly($raw);
 
         // Append "Driver" suffix only when it is missing.
@@ -28,8 +30,13 @@ final class MakeDriverCommand extends Command
         // Derive a kebab-case driver name from the class name (sans "Driver").
         $driverName = Str::kebab(Str::beforeLast($className, 'Driver'));
 
-        $namespace = (string) ($this->option('namespace') ?: 'App\\SerialDrivers');
-        $targetDir  = app_path(str_replace('App\\', '', str_replace('\\', '/', $namespace)));
+        $nsOption  = $this->option('namespace');
+        $namespace = is_string($nsOption) && $nsOption !== ''
+            ? $nsOption
+            : 'App\\SerialDrivers';
+
+        $relPath   = (string) str_replace('App\\', '', str_replace('\\', '/', $namespace));
+        $targetDir  = app_path($relPath);
         $targetFile = $targetDir.'/'.$className.'.php';
 
         if (file_exists($targetFile)) {
