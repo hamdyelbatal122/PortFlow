@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Hamzi\Synapse\Domain\Services;
+namespace Hamzi\PortFlow\Domain\Services;
 
 final class IoTFrameBuffer
 {

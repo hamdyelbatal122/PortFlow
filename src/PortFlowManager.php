@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Hamzi\Synapse;
+namespace Hamzi\PortFlow;
 
-use Hamzi\Synapse\Application\Services\DriverRegistry;
-use Hamzi\Synapse\Application\Services\HardwareMessageService;
-use Hamzi\Synapse\Domain\DTO\SerialFrame;
-use Hamzi\Synapse\Infrastructure\Printing\BladeEscPosRenderer;
+use Hamzi\PortFlow\Application\Services\DriverRegistry;
+use Hamzi\PortFlow\Application\Services\HardwareMessageService;
+use Hamzi\PortFlow\Domain\DTO\SerialFrame;
+use Hamzi\PortFlow\Infrastructure\Printing\BladeEscPosRenderer;
 
-final class SynapseManager
+final class PortFlowManager
 {
     public function __construct(
         private readonly DriverRegistry $registry,
@@ -64,7 +64,7 @@ final class SynapseManager
     public function health(): array
     {
         return [
-            'default_driver' => (string) config('synapse.default_driver'),
+            'default_driver' => (string) config('portflow.default_driver'),
             'registered_drivers' => array_keys($this->registry->all()),
         ];
     }

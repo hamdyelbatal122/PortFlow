@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Hamzi\Synapse\Infrastructure\Livewire;
+namespace Hamzi\PortFlow\Infrastructure\Livewire;
 
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
-final class SynapseStatus extends Component
+final class PortFlowStatus extends Component
 {
     public bool $connected = false;
 
@@ -19,7 +19,7 @@ final class SynapseStatus extends Component
     /**
      * @param  array<string, mixed>  $payload
      */
-    #[On('synapse-status-updated')]
+    #[On('portflow-status-updated')]
     public function updateStatus(array $payload): void
     {
         $this->connected = (bool) ($payload['connected'] ?? false);
@@ -29,6 +29,6 @@ final class SynapseStatus extends Component
 
     public function render(): View
     {
-        return view('synapse::livewire.status');
+        return view('portflow::livewire.status');
     }
 }

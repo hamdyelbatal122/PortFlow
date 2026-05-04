@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-use Hamzi\Synapse\Domain\Events\ProductScanned;
-use Hamzi\Synapse\Infrastructure\Drivers\EscPosDriver;
-use Hamzi\Synapse\Infrastructure\Drivers\RawJsonDriver;
-use Hamzi\Synapse\Infrastructure\Drivers\Rs232Driver;
+use Hamzi\PortFlow\Domain\Events\ProductScanned;
+use Hamzi\PortFlow\Infrastructure\Drivers\EscPosDriver;
+use Hamzi\PortFlow\Infrastructure\Drivers\RawJsonDriver;
+use Hamzi\PortFlow\Infrastructure\Drivers\Rs232Driver;
 
 return [
-    'default_driver' => env('SYNAPSE_DEFAULT_DRIVER', 'raw-json'),
+    'default_driver' => env('PORTFLOW_DEFAULT_DRIVER', 'raw-json'),
 
-    'ingest_path' => env('SYNAPSE_INGEST_PATH', '/synapse/ingest'),
+    'ingest_path' => env('PORTFLOW_INGEST_PATH', '/portflow/ingest'),
 
     'ingest_middleware' => ['web'],
 

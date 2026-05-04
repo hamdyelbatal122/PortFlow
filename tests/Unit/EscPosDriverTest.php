@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Hamzi\Synapse\Tests\Unit;
+namespace Hamzi\PortFlow\Tests\Unit;
 
-use Hamzi\Synapse\Infrastructure\Drivers\EscPosDriver;
+use Hamzi\PortFlow\Infrastructure\Drivers\EscPosDriver;
 use PHPUnit\Framework\TestCase;
 
 final class EscPosDriverTest extends TestCase

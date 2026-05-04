@@ -1,7 +1,7 @@
-# Synapse
+# PortFlow
 
-[![CI](https://github.com/hamdyelbatal122/Synapse/actions/workflows/ci.yml/badge.svg)](https://github.com/hamdyelbatal122/Synapse/actions/workflows/ci.yml)
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/hamzi/synapse.svg?style=flat-square)](https://packagist.org/packages/hamzi/synapse)
+[![CI](https://github.com/hamdyelbatal122/PortFlow/actions/workflows/ci.yml/badge.svg)](https://github.com/hamdyelbatal122/PortFlow/actions/workflows/ci.yml)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/hamzi/portflow.svg?style=flat-square)](https://packagist.org/packages/hamzi/portflow)
 [![PHP Version](https://img.shields.io/badge/PHP-8.2%2B-blue?style=flat-square)](https://php.net)
 [![Laravel](https://img.shields.io/badge/Laravel-11%2F12%2F13-red?style=flat-square)](https://laravel.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
@@ -12,7 +12,7 @@
 
 ## Contents
 
-- [What is Synapse?](#what-is-synapse)
+- [What is PortFlow?](#what-is-portflow)
 - [Architecture](#architecture)
 - [Requirements](#requirements)
 - [Installation](#installation)
@@ -34,18 +34,18 @@
 
 ---
 
-## What is Synapse?
+## What is PortFlow?
 
-Most Laravel packages live entirely in software. Synapse does not.
+Most Laravel packages live entirely in software. PortFlow does not.
 
 It bridges **physical hardware** (printers, scales, sensors, microcontrollers) with Laravel's event system and database, translating raw serial bytes into typed, routable `SerialFrame` DTOs that your application can consume like any other event.
 
 ```
 Browser (Web Serial API)
        │
-       │  POST /synapse/ingest  { driver: "raw-json", chunk: "..." }
+       │  POST /portflow/ingest  { driver: "raw-json", chunk: "..." }
        ▼
-Laravel (IngestController → SynapseManager → DriverRegistry)
+Laravel (IngestController → PortFlowManager → DriverRegistry)
        │
        ├── parse inbound bytes → SerialFrame[]
        │
@@ -58,7 +58,7 @@ Laravel (IngestController → SynapseManager → DriverRegistry)
 
 ## Architecture
 
-Synapse follows Clean Architecture — domain logic is completely isolated from infrastructure:
+PortFlow follows Clean Architecture — domain logic is completely isolated from infrastructure:
 
 ```
 src/
@@ -86,17 +86,17 @@ src/
 │   ├── Http/Controllers/
 │   │   └── IngestController.php      ← POST endpoint consumed by JS bridge
 │   ├── Livewire/
-│   │   ├── SynapseConnector.php      ← Tracks port connection state
-│   │   └── SynapseStatus.php        ← Real-time status display
+│   │   ├── PortFlowConnector.php      ← Tracks port connection state
+│   │   └── PortFlowStatus.php        ← Real-time status display
 │   └── Printing/
 │       ├── EscPosBuilder.php         ← Fluent ESC/POS byte builder
 │       └── BladeEscPosRenderer.php   ← Renders Blade → ESC/POS bytes
 │
 ├── Exceptions/
-│   └── SynapseException.php
+│   └── PortFlowException.php
 ├── Facades/
-│   └── Synapse.php
-└── SynapseServiceProvider.php
+│   └── PortFlow.php
+└── PortFlowServiceProvider.php
 ```
 
 ---
@@ -114,22 +114,22 @@ src/
 ## Installation
 
 ```bash
-composer require hamzi/synapse
+composer require hamzi/portflow
 ```
 
 Publish the config file:
 
 ```bash
-php artisan vendor:publish --tag=synapse-config
+php artisan vendor:publish --tag=portflow-config
 ```
 
 Publish the JavaScript bridge (optional):
 
 ```bash
-php artisan vendor:publish --tag=synapse-assets
+php artisan vendor:publish --tag=portflow-assets
 ```
 
-This copies `synapse-serial.js` to `public/vendor/synapse/` for use in Blade layouts.
+This copies `portflow-serial.js` to `public/vendor/portflow/` for use in Blade layouts.
 
 ---
 
@@ -138,19 +138,19 @@ This copies `synapse-serial.js` to `public/vendor/synapse/` for use in Blade lay
 **1. Add the JS bridge to your layout:**
 
 ```html
-<script src="{{ asset('vendor/synapse/synapse-serial.js') }}"></script>
+<script src="{{ asset('vendor/portflow/portflow-serial.js') }}"></script>
 ```
 
 **2. Drop in the Livewire connector component:**
 
 ```blade
-<livewire:synapse-connector />
+<livewire:portflow-connector />
 ```
 
 **3. Listen for hardware events in your application:**
 
 ```php
-use Hamzi\Synapse\Domain\Events\ProductScanned;
+use Hamzi\PortFlow\Domain\Events\ProductScanned;
 
 class HandleBarcodeScan
 {
@@ -179,7 +179,7 @@ Event::listen(ProductScanned::class, HandleBarcodeScan::class);
 The driver accumulates bytes into an `IoTFrameBuffer` and emits complete JSON frames when a newline delimiter is detected. Invalid JSON is forwarded as `{ raw: "..." }` so data is never silently dropped.
 
 ```php
-// config/synapse.php
+// config/portflow.php
 'default_driver' => 'raw-json',
 
 'driver_options' => [
@@ -218,19 +218,19 @@ The driver accumulates bytes into an `IoTFrameBuffer` and emits complete JSON fr
 
 The ESC/POS driver handles **both directions**:
 - **Inbound** — scanner sends a barcode string that becomes a `SerialFrame`.
-- **Outbound** — `Synapse::encode('escpos', ['text' => $line])` returns bytes to send to the printer.
+- **Outbound** — `PortFlow::encode('escpos', ['text' => $line])` returns bytes to send to the printer.
 
 **Printing a Blade template:**
 
 ```php
-$bytes = Synapse::print('receipts.order', ['order' => $order]);
+$bytes = PortFlow::print('receipts.order', ['order' => $order]);
 // $bytes can be sent directly to the printer via Web Serial
 ```
 
 **Building ESC/POS bytes manually:**
 
 ```php
-use Hamzi\Synapse\Infrastructure\Printing\EscPosBuilder;
+use Hamzi\PortFlow\Infrastructure\Printing\EscPosBuilder;
 
 $bytes = (new EscPosBuilder)
     ->align('center')
@@ -286,7 +286,7 @@ $frame->payload['raw']      // "12.500;kg;SCALE-A1"
 **Encoding outbound commands:**
 
 ```php
-Synapse::encode('rs232', ['TARE', '0', 'RESET']);
+PortFlow::encode('rs232', ['TARE', '0', 'RESET']);
 // → "TARE,0,RESET\n"
 ```
 
@@ -294,11 +294,11 @@ Synapse::encode('rs232', ['TARE', '0', 'RESET']);
 
 ## Creating a Custom Driver
 
-Implement `Hamzi\Synapse\Domain\Contracts\SerialDriver`:
+Implement `Hamzi\PortFlow\Domain\Contracts\SerialDriver`:
 
 ```php
-use Hamzi\Synapse\Domain\Contracts\SerialDriver;
-use Hamzi\Synapse\Domain\DTO\SerialFrame;
+use Hamzi\PortFlow\Domain\Contracts\SerialDriver;
+use Hamzi\PortFlow\Domain\DTO\SerialFrame;
 
 final class MyModbusDriver implements SerialDriver
 {
@@ -331,18 +331,18 @@ final class MyModbusDriver implements SerialDriver
 Register it in your `AppServiceProvider`:
 
 ```php
-use Hamzi\Synapse\Facades\Synapse;
+use Hamzi\PortFlow\Facades\PortFlow;
 
 public function boot(): void
 {
-    Synapse::registerDriver('modbus', MyModbusDriver::class);
+    PortFlow::registerDriver('modbus', MyModbusDriver::class);
 }
 ```
 
 Or in config:
 
 ```php
-// config/synapse.php
+// config/portflow.php
 'drivers' => [
     'modbus' => MyModbusDriver::class,
 ],
@@ -352,15 +352,15 @@ Or in config:
 
 ## Web Serial Integration
 
-`synapse-serial.js` provides a thin wrapper around the [Web Serial API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Serial_API) that POSTs incoming chunks to Laravel automatically.
+`portflow-serial.js` provides a thin wrapper around the [Web Serial API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Serial_API) that POSTs incoming chunks to Laravel automatically.
 
 ```html
 <button id="connect">Connect Device</button>
 
-<script src="{{ asset('vendor/synapse/synapse-serial.js') }}"></script>
+<script src="{{ asset('vendor/portflow/portflow-serial.js') }}"></script>
 <script>
-  const bridge = new SynapseBridge({
-    ingestUrl: '{{ route("synapse.ingest") }}',
+  const bridge = new PortFlowBridge({
+    ingestUrl: '{{ route("portflow.ingest") }}',
     driver:    'raw-json',
     baudRate:  115200,
     csrfToken: document.head.querySelector('meta[name="csrf-token"]').content,
@@ -374,14 +374,14 @@ Or in config:
 
 ```js
 // Fired after each inbound chunk is processed
-window.addEventListener('synapse-status', (e) => {
+window.addEventListener('portflow-status', (e) => {
   console.log('Connected:', e.detail.connected);
   console.log('Driver:', e.detail.driver);
   console.log('Frames received:', e.detail.frames);
 });
 
 // Fired for every raw chunk POSTed to the backend
-window.addEventListener('synapse-frame-received', (e) => {
+window.addEventListener('portflow-frame-received', (e) => {
   console.log('Raw chunk:', e.detail.chunk);
 });
 ```
@@ -389,14 +389,14 @@ window.addEventListener('synapse-frame-received', (e) => {
 **Alpine.js integration (built-in):**
 
 ```html
-<div x-data="synapseConnector()">
+<div x-data="portflowConnector()">
   <button @click="connect" :disabled="connecting" x-text="connected ? 'Disconnect' : 'Connect'"></button>
   <span x-show="connected" x-text="'Frames: ' + frames"></span>
 </div>
 
 <script>
-  window.synapseConfig = {
-    ingestUrl: '{{ route("synapse.ingest") }}',
+    window.portflowConfig = {
+    ingestUrl: '{{ route("portflow.ingest") }}',
     driver: 'raw-json',
     baudRate: 115200,
   };
@@ -412,7 +412,7 @@ window.addEventListener('synapse-frame-received', (e) => {
 The `mappings` config key lets you automatically route frames to Laravel events or Eloquent models without writing any controller code.
 
 ```php
-// config/synapse.php
+// config/portflow.php
 'mappings' => [
     // Fire ProductScanned when raw-json frame has type = "barcode.scan"
     [
@@ -437,7 +437,7 @@ The `mappings` config key lets you automatically route frames to Laravel events 
 
 ## Thermal Printing Engine
 
-Synapse ships a Blade-to-ESC/POS renderer so you can design receipts in familiar Blade syntax:
+PortFlow ships a Blade-to-ESC/POS renderer so you can design receipts in familiar Blade syntax:
 
 **`resources/views/receipts/order.blade.php`**
 
@@ -455,7 +455,7 @@ TOTAL: {{ number_format($order->total, 2) }}
 **In a controller or job:**
 
 ```php
-$bytes = Synapse::print('receipts.order', ['order' => $order]);
+$bytes = PortFlow::print('receipts.order', ['order' => $order]);
 // Send $bytes to the printer via Web Serial or a direct socket
 ```
 
@@ -466,7 +466,7 @@ $bytes = Synapse::print('receipts.order', ['order' => $order]);
 `IoTFrameBuffer` is a standalone utility that accumulates streaming bytes and emits complete frames when a delimiter is found. Use it independently for any stream protocol:
 
 ```php
-use Hamzi\Synapse\Domain\Services\IoTFrameBuffer;
+use Hamzi\PortFlow\Domain\Services\IoTFrameBuffer;
 
 $buffer = new IoTFrameBuffer(delimiter: "\n", maxBytes: 8192);
 
@@ -486,23 +486,23 @@ $remainder = $buffer->flushRemainder();
 
 ```blade
 {{-- Connection toggle button + port label --}}
-<x-synapse-connector />
+<x-portflow-connector />
 
 {{-- Real-time driver status badge --}}
-<x-synapse-status />
+<x-portflow-status />
 ```
 
 ### Livewire
 
 ```blade
-<livewire:synapse-connector />
-<livewire:synapse-status />
+<livewire:portflow-connector />
+<livewire:portflow-status />
 ```
 
-The `SynapseStatus` component listens for the `synapse-status-updated` browser event:
+The `PortFlowStatus` component listens for the `portflow-status-updated` browser event:
 
 ```js
-Livewire.dispatch('synapse-status-updated', {
+Livewire.dispatch('portflow-status-updated', {
   connected: true,
   driver: 'raw-json',
   frames: 42,
@@ -514,7 +514,7 @@ Livewire.dispatch('synapse-status-updated', {
 ## Configuration Reference
 
 ```php
-// config/synapse.php
+// config/portflow.php
 
 return [
     /*
@@ -523,15 +523,15 @@ return [
     |--------------------------------------------------------------------------
     | The driver used when no driver is specified in an ingest request.
     */
-    'default_driver' => env('SYNAPSE_DEFAULT_DRIVER', 'raw-json'),
+    'default_driver' => env('PORTFLOW_DEFAULT_DRIVER', 'raw-json'),
 
     /*
     |--------------------------------------------------------------------------
     | Ingest Endpoint
     |--------------------------------------------------------------------------
-    | HTTP path where synapse-serial.js POSTs incoming serial chunks.
+    | HTTP path where portflow-serial.js POSTs incoming serial chunks.
     */
-    'ingest_path' => env('SYNAPSE_INGEST_PATH', '/synapse/ingest'),
+    'ingest_path' => env('PORTFLOW_INGEST_PATH', '/portflow/ingest'),
 
     /*
     |--------------------------------------------------------------------------
@@ -549,9 +549,9 @@ return [
     | Map driver names to their implementation classes.
     */
     'drivers' => [
-        'raw-json' => \Hamzi\Synapse\Infrastructure\Drivers\RawJsonDriver::class,
-        'escpos'   => \Hamzi\Synapse\Infrastructure\Drivers\EscPosDriver::class,
-        'rs232'    => \Hamzi\Synapse\Infrastructure\Drivers\Rs232Driver::class,
+        'raw-json' => \Hamzi\PortFlow\Infrastructure\Drivers\RawJsonDriver::class,
+        'escpos'   => \Hamzi\PortFlow\Infrastructure\Drivers\EscPosDriver::class,
+        'rs232'    => \Hamzi\PortFlow\Infrastructure\Drivers\Rs232Driver::class,
     ],
 
     /*
@@ -582,7 +582,7 @@ return [
             'driver'              => 'raw-json',
             'payload_field'       => 'type',
             'equals'              => 'barcode.scan',
-            'event'               => \Hamzi\Synapse\Domain\Events\ProductScanned::class,
+            'event'               => \Hamzi\PortFlow\Domain\Events\ProductScanned::class,
             'event_payload_field' => 'barcode',
         ],
     ],

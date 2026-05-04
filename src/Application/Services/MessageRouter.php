@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Hamzi\Synapse\Application\Services;
+namespace Hamzi\PortFlow\Application\Services;
 
-use Hamzi\Synapse\Domain\DTO\SerialFrame;
+use Hamzi\PortFlow\Domain\DTO\SerialFrame;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,7 +15,7 @@ final class MessageRouter
     public function route(SerialFrame $frame): void
     {
         /** @var array<int, array<string, mixed>> $mappings */
-        $mappings = (array) config('synapse.mappings', []);
+        $mappings = (array) config('portflow.mappings', []);
 
         foreach ($mappings as $mapping) {
             if (! $this->matches($mapping, $frame)) {

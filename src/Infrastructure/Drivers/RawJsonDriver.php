@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Hamzi\Synapse\Infrastructure\Drivers;
+namespace Hamzi\PortFlow\Infrastructure\Drivers;
 
-use Hamzi\Synapse\Domain\Contracts\SerialDriver;
-use Hamzi\Synapse\Domain\DTO\SerialFrame;
-use Hamzi\Synapse\Domain\Services\IoTFrameBuffer;
+use Hamzi\PortFlow\Domain\Contracts\SerialDriver;
+use Hamzi\PortFlow\Domain\DTO\SerialFrame;
+use Hamzi\PortFlow\Domain\Services\IoTFrameBuffer;
 use JsonException;
 
 final class RawJsonDriver implements SerialDriver

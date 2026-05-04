@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Hamzi\Synapse\Domain\Contracts;
+namespace Hamzi\PortFlow\Domain\Contracts;
 
-use Hamzi\Synapse\Domain\DTO\SerialFrame;
+use Hamzi\PortFlow\Domain\DTO\SerialFrame;
 
 interface SerialDriver
 {

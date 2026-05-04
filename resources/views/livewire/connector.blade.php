@@ -1,7 +1,7 @@
 <div>
     <button
         type="button"
-        x-data="synapseConnector()"
+        x-data="portflowConnector()"
         x-on:click="connect()"
         class="inline-flex items-center rounded-lg border border-slate-700 bg-slate-900 px-4 py-2 text-sm font-medium text-white"
     >

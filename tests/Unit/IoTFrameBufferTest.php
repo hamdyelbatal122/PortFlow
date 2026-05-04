@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Hamzi\Synapse\Tests\Unit;
+namespace Hamzi\PortFlow\Tests\Unit;
 
-use Hamzi\Synapse\Domain\Services\IoTFrameBuffer;
+use Hamzi\PortFlow\Domain\Services\IoTFrameBuffer;
 use PHPUnit\Framework\TestCase;
 
 final class IoTFrameBufferTest extends TestCase

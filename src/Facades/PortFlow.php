@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Hamzi\Synapse\Facades;
+namespace Hamzi\PortFlow\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-final class Synapse extends Facade
+final class PortFlow extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return 'synapse';
+        return 'portflow';
     }
 }
