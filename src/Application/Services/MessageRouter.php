@@ -48,8 +48,8 @@ final class MessageRouter
                 $this->persistMappedModel($mapping, $frame);
             } catch (Throwable $e) {
                 Log::error('[PortFlow] Frame routing failed', [
-                    'driver'  => $frame->driver,
-                    'error'   => $e->getMessage(),
+                    'driver' => $frame->driver,
+                    'error' => $e->getMessage(),
                     'payload' => $frame->payload,
                 ]);
             }
@@ -67,7 +67,7 @@ final class MessageRouter
         }
 
         $payloadField = $mapping['payload_field'] ?? null;
-        $matchValue   = $mapping['equals'] ?? null;
+        $matchValue = $mapping['equals'] ?? null;
 
         if (! is_string($payloadField) || $matchValue === null) {
             return true;

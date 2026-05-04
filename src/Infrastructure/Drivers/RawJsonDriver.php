@@ -30,7 +30,7 @@ final class RawJsonDriver implements SerialDriver
     public function configure(array $options = []): void
     {
         $delimiter = (string) ($options['delimiter'] ?? "\n");
-        $maxBytes  = (int) ($options['max_bytes'] ?? 16384);
+        $maxBytes = (int) ($options['max_bytes'] ?? 16384);
 
         $this->buffer = new IoTFrameBuffer($delimiter, $maxBytes);
     }
@@ -60,7 +60,7 @@ final class RawJsonDriver implements SerialDriver
     public function parseInbound(string $chunk, array $context = []): array
     {
         $sessionId = isset($context['session_id']) ? (string) $context['session_id'] : null;
-        $cacheKey  = $sessionId !== null
+        $cacheKey = $sessionId !== null
             ? 'portflow.buf.'.hash('sha256', $sessionId)
             : null;
 

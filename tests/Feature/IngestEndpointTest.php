@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Hamzi\PortFlow\Tests\Feature;
 
 use Hamzi\PortFlow\Tests\TestCase;
+use Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull;
+use Illuminate\Foundation\Http\Middleware\TrimStrings;
 
 final class IngestEndpointTest extends TestCase
 {
@@ -15,8 +17,8 @@ final class IngestEndpointTest extends TestCase
         // TrimStrings and ConvertEmptyStringsToNull would corrupt binary
         // delimiters (\n, \r\n) in serial chunk data.
         $this->withoutMiddleware([
-            \Illuminate\Foundation\Http\Middleware\TrimStrings::class,
-            \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+            TrimStrings::class,
+            ConvertEmptyStringsToNull::class,
         ]);
     }
 
@@ -24,7 +26,7 @@ final class IngestEndpointTest extends TestCase
     {
         $response = $this->postJson(route('portflow.ingest'), [
             'driver' => 'raw-json',
-            'chunk'  => '{"type":"barcode.scan","barcode":"123456"}'."\n",
+            'chunk' => '{"type":"barcode.scan","barcode":"123456"}'."\n",
         ]);
 
         $response->assertOk()
@@ -42,7 +44,7 @@ final class IngestEndpointTest extends TestCase
     {
         $this->postJson(route('portflow.ingest'), [
             'driver' => 'raw-json',
-            'chunk'  => str_repeat('x', 16385),
+            'chunk' => str_repeat('x', 16385),
         ])->assertUnprocessable();
     }
 
@@ -52,7 +54,7 @@ final class IngestEndpointTest extends TestCase
 
         $this->postJson(route('portflow.ingest'), [
             'driver' => 'unknown-driver',
-            'chunk'  => 'test',
+            'chunk' => 'test',
         ])->assertServerError();
     }
 
@@ -67,15 +69,15 @@ final class IngestEndpointTest extends TestCase
     {
         // First chunk: partial JSON
         $this->postJson(route('portflow.ingest'), [
-            'driver'  => 'raw-json',
-            'chunk'   => '{"sensor":"temp"',
+            'driver' => 'raw-json',
+            'chunk' => '{"sensor":"temp"',
             'context' => ['session_id' => 'integration-test-session'],
         ])->assertOk()->assertJson(['ok' => true, 'frames_processed' => 0]);
 
         // Second chunk: completes the JSON — should produce 1 frame thanks to buffer persistence
         $this->postJson(route('portflow.ingest'), [
-            'driver'  => 'raw-json',
-            'chunk'   => ',"value":22.5}'."\n",
+            'driver' => 'raw-json',
+            'chunk' => ',"value":22.5}'."\n",
             'context' => ['session_id' => 'integration-test-session'],
         ])->assertOk()->assertJson(['ok' => true, 'frames_processed' => 1]);
     }
@@ -84,7 +86,7 @@ final class IngestEndpointTest extends TestCase
     {
         $this->postJson(route('portflow.ingest'), [
             'driver' => 'escpos',
-            'chunk'  => "4901234567890\n",
+            'chunk' => "4901234567890\n",
         ])->assertOk()->assertJson(['ok' => true, 'driver' => 'escpos', 'frames_processed' => 1]);
     }
 
@@ -92,7 +94,7 @@ final class IngestEndpointTest extends TestCase
     {
         $this->postJson(route('portflow.ingest'), [
             'driver' => 'rs232',
-            'chunk'  => "1.250 kg\n",
+            'chunk' => "1.250 kg\n",
         ])->assertOk()->assertJson(['ok' => true, 'driver' => 'rs232', 'frames_processed' => 1]);
     }
 }
