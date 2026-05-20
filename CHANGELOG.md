@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.6.0](https://github.com/hamdyelbatal122/PortFlow/compare/v0.5.2...v0.6.0) (2026-05-20)
+
+
+### Features
+
+* comprehensive security hardening, full test coverage, and professional contributing guide ([09356ff](https://github.com/hamdyelbatal122/PortFlow/commit/09356ffca6b8920a115d24566b5793c8c7a37454))
+* update changelog for version 0.6.0 with security enhancements, new features, bug fixes, and increased test coverage ([af65097](https://github.com/hamdyelbatal122/PortFlow/commit/af650977ae367e09057491de0128d7afd011c382))
+
 ## [0.6.0] — 2026-05-05
 
 ### Security
