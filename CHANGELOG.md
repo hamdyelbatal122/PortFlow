@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.6.0](https://github.com/hamdyelbatal122/PortFlow/compare/v0.5.2...v0.6.0) (2026-05-31)
+
+
+### Features
+
+* add WebhookDriver, implement HasBufferPersistence trait, and expose driver registration via Facade ([3cbe497](https://github.com/hamdyelbatal122/PortFlow/commit/3cbe497848a116c4723570ca8c5a0b5a1d463ce9))
+* comprehensive security hardening, full test coverage, and professional contributing guide ([3ba32dc](https://github.com/hamdyelbatal122/PortFlow/commit/3ba32dcd5036ad6dcb4ef99c4cc233a6dac6c31e))
+* update changelog for version 0.6.0 with security enhancements, new features, bug fixes, and increased test coverage ([942c47d](https://github.com/hamdyelbatal122/PortFlow/commit/942c47d5dccd5124cbd83dcff703fa30f946021c))
+
 ## [0.6.0] — 2026-05-05
 
 ### Security
