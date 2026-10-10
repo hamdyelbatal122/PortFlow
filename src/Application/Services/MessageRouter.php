@@ -22,7 +22,19 @@ final class MessageRouter
     public function route(SerialFrame $frame): void
     {
         if ((bool) config('portflow.queue_routing', false)) {
-            RouteSerialFrameJob::dispatch($frame);
+            $job = new RouteSerialFrameJob($frame);
+
+            $connection = config('portflow.queue_connection');
+            if (is_string($connection) && $connection !== '') {
+                $job->onConnection($connection);
+            }
+
+            $queue = config('portflow.queue');
+            if (is_string($queue) && $queue !== '') {
+                $job->onQueue($queue);
+            }
+
+            dispatch($job);
 
             return;
         }

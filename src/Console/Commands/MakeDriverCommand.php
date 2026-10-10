@@ -35,7 +35,8 @@ final class MakeDriverCommand extends Command
             ? $nsOption
             : 'App\\SerialDrivers';
 
-        $relPath = (string) str_replace('App\\', '', str_replace('\\', '/', $namespace));
+        $relPath = (string) str_replace(['App\\', 'App/'], '', $namespace);
+        $relPath = (string) str_replace('\\', '/', $relPath);
         $targetDir = app_path($relPath);
         $targetFile = $targetDir.'/'.$className.'.php';
 
@@ -73,10 +74,10 @@ final class MakeDriverCommand extends Command
 
         $this->line('  <options=bold>Next steps:</>');
         $this->line('');
-        $this->line('  1. Register the driver in <comment>config/portflow.php</comment>:');
+        $this->line('  Register the driver in <comment>config/portflow.php</comment>:');
         $this->line("     <comment>'drivers' => ['{$driverName}' => \\{$namespace}\\{$className}::class]</comment>");
         $this->newLine();
-        $this->line('  2. Use it in your application:');
+        $this->line('  Use it in your application:');
         $this->line("     <comment>PortFlow::ingest('{$driverName}', \$rawChunk);</comment>");
         $this->newLine();
 

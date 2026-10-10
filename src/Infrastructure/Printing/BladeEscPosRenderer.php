@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Hamzi\PortFlow\Infrastructure\Printing;
 
+use Hamzi\PortFlow\Exceptions\PortFlowException;
 use Illuminate\Contracts\View\Factory;
+use Throwable;
 
 final class BladeEscPosRenderer
 {
@@ -15,7 +17,11 @@ final class BladeEscPosRenderer
      */
     public function render(string $view, array $data = []): string
     {
-        $content = trim($this->views->make($view, $data)->render());
+        try {
+            $content = trim($this->views->make($view, $data)->render());
+        } catch (Throwable $e) {
+            throw PortFlowException::printFailed($view, $e->getMessage(), $e);
+        }
 
         $builder = new EscPosBuilder;
 

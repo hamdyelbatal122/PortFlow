@@ -47,9 +47,13 @@ final class DriverRegistry
             throw PortFlowException::driverNotFound($name);
         }
 
-        /** @var SerialDriver $driver */
-        $driver = $this->container->make($className);
-        $driver->configure((array) config("portflow.driver_options.{$name}", []));
+        try {
+            /** @var SerialDriver $driver */
+            $driver = $this->container->make($className);
+            $driver->configure((array) config("portflow.driver_options.{$name}", []));
+        } catch (\Throwable $e) {
+            throw PortFlowException::invalidDriver($name, $e->getMessage());
+        }
 
         $this->instances[$name] = $driver;
 

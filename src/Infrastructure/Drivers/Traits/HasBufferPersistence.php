@@ -43,4 +43,25 @@ trait HasBufferPersistence
             Cache::put($cacheKey, $value, $ttl);
         }
     }
+
+    /**
+     * Clear buffer from cache for the given context and driver.
+     *
+     * @param  array<string, mixed>  $context
+     */
+    protected function clearBuffer(array $context, string $driverName): void
+    {
+        $sessionId = isset($context['session_id']) ? (string) $context['session_id'] : null;
+        if ($sessionId !== null && $sessionId !== '') {
+            Cache::forget("portflow.{$driverName}.buf.".hash('sha256', $sessionId));
+        }
+    }
+
+    /**
+     * Resolve the cache key for a given driver and session id.
+     */
+    public static function resolveCacheKey(string $driverName, string $sessionId): string
+    {
+        return "portflow.{$driverName}.buf.".hash('sha256', $sessionId);
+    }
 }

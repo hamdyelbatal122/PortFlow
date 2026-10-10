@@ -31,7 +31,7 @@ final class DiagnoseCommand extends Command
     {
         $this->components->info('PortFlow System Diagnostics');
 
-        $this->comment('1. Checking Cache Infrastructure for Delimiter Buffering...');
+        $this->comment('Checking Cache Infrastructure for Delimiter Buffering...');
         $cacheDriver = config('cache.default', 'unknown');
         $cacheStatus = 'OK';
 
@@ -60,7 +60,7 @@ final class DiagnoseCommand extends Command
         }
 
         $this->newLine();
-        $this->comment('2. Diagnosing Registered Drivers & Configurations...');
+        $this->comment('Diagnosing Registered Drivers & Configurations...');
 
         $drivers = $registry->all();
         $rows = [];
@@ -87,7 +87,7 @@ final class DiagnoseCommand extends Command
         );
 
         $this->newLine();
-        $this->comment('3. Performing Validation on Configured Mappings...');
+        $this->comment('Performing Validation on Configured Mappings...');
 
         $mappings = (array) config('portflow.mappings', []);
         if (empty($mappings)) {

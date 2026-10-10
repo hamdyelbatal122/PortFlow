@@ -14,6 +14,7 @@ final class PortFlowManager
     public function __construct(
         private readonly DriverRegistry $registry,
         private readonly HardwareMessageService $messages,
+        private readonly ?BladeEscPosRenderer $renderer = null,
     ) {}
 
     /** Register or override a driver class for the given name. */
@@ -50,22 +51,24 @@ final class PortFlowManager
      */
     public function print(string $view, array $data = []): string
     {
-        /** @var BladeEscPosRenderer $renderer */
-        $renderer = app(BladeEscPosRenderer::class);
+        $renderer = $this->renderer ?? app(BladeEscPosRenderer::class);
 
         return $renderer->render($view, $data);
     }
 
     /**
-     * Return a health-check array with registered driver names.
+     * Return a health-check array with registered driver names and system state.
      *
-     * @return array{default_driver: string, registered_drivers: list<string>}
+     * @return array{status: string, default_driver: string, registered_drivers: list<string>, cache_driver: string, queue_routing: bool}
      */
     public function health(): array
     {
         return [
+            'status' => 'ok',
             'default_driver' => (string) config('portflow.default_driver'),
             'registered_drivers' => array_keys($this->registry->all()),
+            'cache_driver' => (string) config('cache.default', 'file'),
+            'queue_routing' => (bool) config('portflow.queue_routing', false),
         ];
     }
 }

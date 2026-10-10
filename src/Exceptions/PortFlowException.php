@@ -27,4 +27,9 @@ final class PortFlowException extends RuntimeException
     {
         return new self("PortFlow configuration error: {$reason}.");
     }
+
+    public static function printFailed(string $view, string $reason, ?\Throwable $previous = null): self
+    {
+        return new self("PortFlow failed to render ESC/POS view [{$view}]: {$reason}", 0, $previous);
+    }
 }

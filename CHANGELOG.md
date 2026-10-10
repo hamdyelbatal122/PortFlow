@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.9.0](https://github.com/hamdyelbatal122/PortFlow/compare/v0.8.0...v0.9.0) (2026-10-10)
+
+## Summary
+PortFlow 0.9.0 introduces dedicated diagnostic and simulation CLI commands, queue routing enhancements, hardened error handling with Throwable resilience, and expanded CI test matrices for both prefer-lowest and prefer-stable environments.
+
+## Changes
+- Added `portflow:health` command for fast subsystem validation and container health check probes.
+- Added `portflow:simulate` command for hardware payload simulation and frame inspection.
+- Added `portflow:purge-buffers` command and `clearBuffer` method for targeted cache buffer invalidation.
+- Added configurable queue connection and queue name support for asynchronous frame routing.
+- Added configurable HTTP request timeout in `WebhookDriver`.
+- Hardened exception handling across `IngestController`, `RawJsonDriver`, `DriverRegistry`, and `BladeEscPosRenderer` to catch `\Throwable`.
+- Fixed namespace path resolution in `portflow:make-driver`.
+- Enhanced CI workflow matrix to test both `prefer-lowest` and `prefer-stable` dependencies across PHP 8.2, 8.3, and 8.4.
+- Expanded automated test suite to 122 tests with 100% pass rate.
+
+---
+
 ## [0.8.0](https://github.com/hamdyelbatal122/PortFlow/compare/v0.7.0...v0.8.0) (2026-07-26)
 
 

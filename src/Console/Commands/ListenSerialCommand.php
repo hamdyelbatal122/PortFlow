@@ -216,7 +216,7 @@ final class ListenSerialCommand extends Command
 
         try {
             $decoded = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
-        } catch (\JsonException) {
+        } catch (\Throwable) {
             return null;
         }
 

@@ -8,8 +8,11 @@ use Hamzi\PortFlow\Application\Services\DriverRegistry;
 use Hamzi\PortFlow\Application\Services\HardwareMessageService;
 use Hamzi\PortFlow\Application\Services\MessageRouter;
 use Hamzi\PortFlow\Console\Commands\DiagnoseCommand;
+use Hamzi\PortFlow\Console\Commands\HealthCheckCommand;
 use Hamzi\PortFlow\Console\Commands\ListenSerialCommand;
 use Hamzi\PortFlow\Console\Commands\MakeDriverCommand;
+use Hamzi\PortFlow\Console\Commands\PurgeBuffersCommand;
+use Hamzi\PortFlow\Console\Commands\SimulateCommand;
 use Hamzi\PortFlow\Domain\Contracts\SerialDriver;
 use Hamzi\PortFlow\Exceptions\PortFlowException;
 use Hamzi\PortFlow\Infrastructure\Livewire\PortFlowConnector;
@@ -38,6 +41,7 @@ final class PortFlowServiceProvider extends ServiceProvider
         $this->app->singleton('portflow', fn ($app) => new PortFlowManager(
             $app->make(DriverRegistry::class),
             $app->make(HardwareMessageService::class),
+            $app->make(BladeEscPosRenderer::class),
         ));
     }
 
@@ -73,6 +77,9 @@ final class PortFlowServiceProvider extends ServiceProvider
                 MakeDriverCommand::class,
                 ListenSerialCommand::class,
                 DiagnoseCommand::class,
+                HealthCheckCommand::class,
+                PurgeBuffersCommand::class,
+                SimulateCommand::class,
             ]);
         }
     }

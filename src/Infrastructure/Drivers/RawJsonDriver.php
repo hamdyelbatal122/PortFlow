@@ -7,11 +7,14 @@ namespace Hamzi\PortFlow\Infrastructure\Drivers;
 use Hamzi\PortFlow\Domain\Contracts\SerialDriver;
 use Hamzi\PortFlow\Domain\DTO\SerialFrame;
 use Hamzi\PortFlow\Domain\Services\IoTFrameBuffer;
+use Hamzi\PortFlow\Infrastructure\Drivers\Traits\HasBufferPersistence;
 use Illuminate\Support\Facades\Cache;
-use JsonException;
+use Throwable;
 
 final class RawJsonDriver implements SerialDriver
 {
+    use HasBufferPersistence;
+
     private IoTFrameBuffer $buffer;
 
     public function __construct()
@@ -59,13 +62,18 @@ final class RawJsonDriver implements SerialDriver
      */
     public function parseInbound(string $chunk, array $context = []): array
     {
-        $sessionId = isset($context['session_id']) ? (string) $context['session_id'] : null;
-        $cacheKey = $sessionId !== null
-            ? 'portflow.buf.'.hash('sha256', $sessionId)
-            : null;
+        [$bufferState, $cacheKey] = $this->loadBuffer($context, 'raw-json');
+
+        if ($bufferState === '' && $cacheKey !== null && isset($context['session_id'])) {
+            $legacyKey = 'portflow.buf.'.hash('sha256', (string) $context['session_id']);
+            $legacyState = (string) Cache::get($legacyKey, '');
+            if ($legacyState !== '') {
+                $bufferState = $legacyState;
+            }
+        }
 
         if ($cacheKey !== null) {
-            $this->buffer->setState((string) Cache::get($cacheKey, ''));
+            $this->buffer->setState($bufferState);
         }
 
         $frames = [];
@@ -76,7 +84,7 @@ final class RawJsonDriver implements SerialDriver
                 if (! is_array($decoded)) {
                     $decoded = ['raw' => $packet];
                 }
-            } catch (JsonException) {
+            } catch (Throwable) {
                 $decoded = ['raw' => $packet];
             }
 
@@ -84,7 +92,7 @@ final class RawJsonDriver implements SerialDriver
         }
 
         if ($cacheKey !== null) {
-            Cache::put($cacheKey, $this->buffer->getState(), 300);
+            $this->storeBuffer($cacheKey, $this->buffer->getState());
         }
 
         return $frames;

@@ -20,6 +20,8 @@ final class WebhookDriver implements SerialDriver
      */
     private array $headers = [];
 
+    private int $timeout = 10;
+
     public function name(): string
     {
         return 'webhook';
@@ -33,6 +35,7 @@ final class WebhookDriver implements SerialDriver
         $this->url = (string) ($options['url'] ?? '');
         $this->method = strtoupper((string) ($options['method'] ?? 'POST'));
         $this->headers = (array) ($options['headers'] ?? []);
+        $this->timeout = max(1, (int) ($options['timeout'] ?? 10));
     }
 
     /**
@@ -67,7 +70,7 @@ final class WebhookDriver implements SerialDriver
         $data = is_array($decoded) ? $decoded : ['raw' => $chunk];
 
         try {
-            $pendingRequest = Http::withHeaders($this->headers);
+            $pendingRequest = Http::withHeaders($this->headers)->timeout($this->timeout);
 
             $response = match ($this->method) {
                 'GET' => $pendingRequest->get($this->url, $data),

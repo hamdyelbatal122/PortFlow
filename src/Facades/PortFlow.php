@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static string encode(string $driver, array<int|string, mixed>|string $payload)
  * @method static string print(string $view, array<string, mixed> $data = [])
  * @method static void registerDriver(string $name, string $driverClass)
- * @method static array{default_driver: string, registered_drivers: list<string>} health()
+ * @method static array{status: string, default_driver: string, registered_drivers: list<string>, cache_driver: string, queue_routing: bool} health()
  *
  * @see PortFlowManager
  */

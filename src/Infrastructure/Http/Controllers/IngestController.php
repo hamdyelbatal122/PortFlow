@@ -7,6 +7,7 @@ namespace Hamzi\PortFlow\Infrastructure\Http\Controllers;
 use Hamzi\PortFlow\PortFlowManager;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 final class IngestController
 {
@@ -54,11 +55,23 @@ final class IngestController
             ], 422);
         }
 
-        $frames = $portflow->ingest(
-            driver: $driver,
-            chunk: $chunk,
-            context: (array) ($validated['context'] ?? []),
-        );
+        try {
+            $frames = $portflow->ingest(
+                driver: $driver,
+                chunk: $chunk,
+                context: (array) ($validated['context'] ?? []),
+            );
+        } catch (\Throwable $e) {
+            Log::error('[PortFlow] Ingestion error: '.$e->getMessage(), [
+                'driver' => $driver,
+                'exception' => $e,
+            ]);
+
+            return response()->json([
+                'ok' => false,
+                'message' => $e->getMessage(),
+            ], 500);
+        }
 
         return response()->json([
             'ok' => true,

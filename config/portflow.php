@@ -61,6 +61,13 @@ return [
      */
     'queue_routing' => env('PORTFLOW_QUEUE_ROUTING', false),
 
+    /*
+     | Optional queue connection and queue name for asynchronous frame routing.
+     | Leave null to use application queue defaults.
+     */
+    'queue_connection' => env('PORTFLOW_QUEUE_CONNECTION', null),
+    'queue' => env('PORTFLOW_QUEUE', null),
+
     'drivers' => [
         'raw-json' => RawJsonDriver::class,
         'barcode-line' => BarcodeLineDriver::class,
@@ -97,6 +104,7 @@ return [
             'url' => env('PORTFLOW_WEBHOOK_URL', ''),
             'method' => 'POST',
             'headers' => [],
+            'timeout' => (int) env('PORTFLOW_WEBHOOK_TIMEOUT', 10),
         ],
     ],
 
